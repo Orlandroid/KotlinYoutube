@@ -10,6 +10,10 @@ class UserController(private val user:User, private val userview:UserView) {
         return mapOf("usuario@gmail.com" to "admin1234")
     }
 
+    fun createAChannel(){
+
+    }
+
     fun iniciarSession(){
         for ((clave, valor) in checkUser()){
             if(user.password==clave && user.password==valor)

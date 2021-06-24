@@ -6,7 +6,10 @@ import kotlin.concurrent.schedule
 class VideoView {
 
     fun playAVideo(name:String,duration:Int){
-        println("Reproduciendo el video $name")
+        Timer("SettingUp", false).schedule((duration*1000).toLong()) {
+            println("Reproduciendo el video $name")
+        }
+
     }
 
 }

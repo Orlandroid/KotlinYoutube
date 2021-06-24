@@ -11,10 +11,7 @@ fun main() {
 }
 
 fun video(){
-    val videoView=VideoView()
-    val video=Video("clean code",5)
-    val videoController=VideoController(video,videoView)
-    videoController.watchAVideo()
+
 }
 
 fun user(){
