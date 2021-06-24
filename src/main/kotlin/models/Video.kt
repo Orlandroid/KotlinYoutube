@@ -1,3 +1,3 @@
 package models
 
-data class Video(val nombre:String,val duracion:Int)
+data class Video(val name:String,val duration:Int)
