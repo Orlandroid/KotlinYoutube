@@ -1,8 +1,7 @@
 
 ##my files
 /build/
-./gradle/
-
+/.gradle/
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all
 
@@ -167,3 +166,12 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
+/.gradle/
+/.gradle/
+.gradle/6.8/executionHistory/executionHistory.bin
+.gradle/6.8/executionHistory/executionHistory.lock
+.gradle/6.8/executionHistory/executionHistory.bin
+.gradle/6.8/fileHashes/fileHashes.bin
+.gradle/6.8/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin

@@ -1,13 +1,8 @@
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import models.User
 
 fun main() {
-    println("Menu principal")
-
-    GlobalScope.launch {
-        print("Loading....")
-        delay(1000)
-    }
+    val user = User("Usuario","Contra")
+    println(user.password)
+    println(user.user)
 }
