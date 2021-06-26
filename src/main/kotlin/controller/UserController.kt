@@ -3,7 +3,7 @@ package controller
 import models.User
 import view.UserView
 
-class UserController(private val user:User, private val userview:UserView) {
+class UserController(private val user:User, private val userView:UserView) {
 
 
     private fun checkUser():Map<String,String>{
@@ -17,9 +17,9 @@ class UserController(private val user:User, private val userview:UserView) {
     fun iniciarSession(){
         for ((clave, valor) in checkUser()){
             if(user.password==clave && user.password==valor)
-                userview.welcome()
+                userView.welcome()
             else
-                userview.passwordOrUserWrong()
+                userView.passwordOrUserWrong()
         }
     }
 

@@ -1,17 +1,41 @@
 
+import controller.ChannelController
 import controller.UserController
-import controller.VideoController
+import controller.YoutubeController
+import models.Channel
 import models.User
 import models.Video
+import models.Youtube
+import view.ChannelView
 import view.UserView
-import view.VideoView
+import view.YoutubeView
 
 fun main() {
-    video()
+    val youtube=Youtube()
+    val youtubeView=YoutubeView()
+    val youtubeController=YoutubeController(youtube,youtubeView)
+    youtubeController.initYoutube()
 }
 
 fun video(){
 
+}
+
+fun userCreateAchannel(){
+    val user=User("orlando","admin1234")
+    val userView=UserView()
+    userView.haveAChanel(user)
+    val channel = Channel("Android",user,"Cannal dedicado acontenido sobre android")
+    val channelView=ChannelView()
+    userView.haveAChanel(user)
+    val channelControl = ChannelController(channel,channelView)
+    val video=Video("Android basic",5,channel)
+    val vide2=Video("Fundamentals kotlin",5,channel)
+    channelControl.upOneVideo(video)
+    channelControl.upOneVideo(vide2)
+    channelControl.showAllVideos()
+    channelControl.removeOneVideo(video)
+    channelControl.showAllVideos()
 }
 
 fun user(){
