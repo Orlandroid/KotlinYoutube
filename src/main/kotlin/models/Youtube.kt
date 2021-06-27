@@ -7,5 +7,4 @@ class Youtube (){
     var canales = ArrayList<Channel>()
     var usuarios=ArrayList<User>()
 
-
 }

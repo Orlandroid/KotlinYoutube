@@ -14,7 +14,7 @@ class YoutubeController(private val youtube: Youtube,private val youtubeView: Yo
     }
 
 
-    fun seeTermAndLicence(){
+    fun seeTermsAndLicence(){
 
     }
 

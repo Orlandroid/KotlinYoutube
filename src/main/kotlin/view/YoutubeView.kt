@@ -5,6 +5,8 @@ import models.Channel
 class YoutubeView {
 
 
+    /** mostar menu principal las actividades que el usuario puedo hacer **/
+
     fun showAllVideos(channels:ArrayList<Channel>){
         for (channel in channels.iterator())
             println()
