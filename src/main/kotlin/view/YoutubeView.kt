@@ -1,6 +1,8 @@
 package view
 
+import controller.YoutubeController
 import models.Channel
+import models.User
 
 class YoutubeView {
 
@@ -10,6 +12,15 @@ class YoutubeView {
     fun showAllVideos(channels:ArrayList<Channel>){
         for (channel in channels.iterator())
             println()
+    }
+
+
+    fun succesCreateAccount(){
+        println("Account create correcty")
+    }
+
+    fun succerCreateChannel(){
+        println("Channel create correcly")
     }
 
     fun initYoutube(){

@@ -15,6 +15,14 @@ fun main() {
     val youtubeView=YoutubeView()
     val youtubeController=YoutubeController(youtube,youtubeView)
     youtubeController.initYoutube()
+    val user=User("android@gmail.com","admin1234")
+    val userView=UserView()
+    val userController=UserController(user,userView,youtubeController)
+    userController.isOnline()
+    userController.signIn()
+    youtubeController.haveAccountUser(user)
+
+
 }
 
 fun video(){
@@ -46,6 +54,6 @@ fun user(){
     val password= readLine().toString()
     val user=User(usuario,password)
 
-    val userController=UserController(user,userview)
-    userController.iniciarSession()
+    //val userController=UserController(user,userview,)
+    //userController.logIn()
 }
