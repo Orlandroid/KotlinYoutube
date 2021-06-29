@@ -1,11 +1,17 @@
 package controller
 
 import models.Video
-import view.VideoView
 
-class VideoController(val video: Video, private val videoView: VideoView) {
+class VideoController(val video: Video) {
 
-    fun watchAVideo(){
-        videoView.playAVideo(video.name,video.duration)
-    }
+    /**
+     * cambiarVelocidadVideo()
+     * cambiarCalidadVideo()
+     * cambiarIdiomasSubtitulos()
+     * desactivarSubtitulos()
+     * activarSubtitulos()
+     * descargarVideo()
+     *
+     * **/
+
 }
