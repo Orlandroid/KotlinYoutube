@@ -10,45 +10,35 @@ class ChannelController(private val channel: Channel){
 
     fun addSubscriber(user:User)=channel.subscribers.add(user)
 
-    fun removeSubScriber(user: User)=channel.subscribers.remove(user)
+    fun removeSubscriber(user: User)=channel.subscribers.remove(user)
 
     fun getAllVideo()=channel.videos
 
     private fun showCharacter(character:Char='*', size:Int=20){
         for (x in 0..size)
             print(character)
-
     }
 
 
-    fun searcAvideo(searching:String){
-        for (video in channel.videos){
-            if(video.name==searching)
-                showVideo(video)
-        }
+    private fun sendNotificationAUserSubscribeAvideo(){
+        /**implement one tipe of listener what when
+         * up one video send one notifications to all users*/
     }
 
-    /***recibe one video and show ther properies*/
     private fun showVideo(video:Video){
-        println("""
-            
+        println("""         
             channel:${video.channel.name}
             name:${video.name}
             duration:${video.duration}
         """.trimIndent())
     }
 
-    fun watchAVide(video: Video){
-        println("Waching ${video.name}")
-        Thread.sleep(video.duration.toLong())
-        /**rise the number of visitas**/
-        video.visits+=1
-    }
 
     fun showAllVideos(){
         println("All videos from ${channel.name}")
-        for (x in channel.videos.iterator())
-            showVideo(x)
+        channel.videos.forEach {
+            showVideo(it)
+        }
     }
 
     fun showTotalOfSubscriber(){
@@ -62,16 +52,17 @@ class ChannelController(private val channel: Channel){
 
     }
 
-    fun upVideo(video:Video){
+    fun upVideo(video:Video,show:Boolean=false){
         channel.videos.add(video)
+        if(show)
         println("The vide was upload correcly")
     }
 
-    fun removeOneVideo(video: Video){
+    fun removeOneVideo(video: Video,show:Boolean=false){
         channel.videos.remove(video)
+        if (show)
         println("The vide was delete correcly")
     }
-
 
 
 }

@@ -5,7 +5,9 @@ import models.User
 class UserController(private val user:User, private val youtubeController: YoutubeController) {
 
 
-    /*** TuCanal()
+    /***
+     *      ACCIONES QUE EL USUARIO PUEDO HACER
+     *    TuCanal()
      *   subirAvideo()
      *   verCanalesAlosQueEstoySubscripto()
      *   darLikeAvideos()

@@ -8,10 +8,8 @@ data class Channel(val name:String,val user: User,val description:String){
         user.haveAchannel=true
     }
 
-    val videos = ArrayList<Video>()
-    val subscribers=ArrayList<User>()
-    fun getCountVideos() = videos.size
-
+    val videos = mutableListOf<Video>()
+    val subscribers= mutableListOf<User>()
 
 }
 

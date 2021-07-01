@@ -4,8 +4,7 @@ import java.util.ArrayList
 
 class Youtube {
 
-    var channels = ArrayList<Channel>()
-    var users=ArrayList<User>()
-
+    val channels = mutableListOf<Channel>()
+    val users= mutableListOf<User>()
 
 }
