@@ -21,19 +21,8 @@ class UserController(private val user:User, private val youtubeController: Youtu
      *   * **/
 
 
-    private fun checkUser():Map<String,String>{
-        return mapOf("usuario@gmail.com" to "admin1234")
-    }
-
-
-
     private fun enterUser(){
         println("Enter User: ")
-    }
-
-
-    fun isNotOnline(){
-        println("El user current don,t is not online")
     }
 
 
@@ -55,8 +44,15 @@ class UserController(private val user:User, private val youtubeController: Youtu
     }
 
 
-    fun createAChannel(){
 
+    fun videosWhatLike(user:User){
+        user.videosWhaLike.forEach {
+            println("Videos que te gustan $it")
+        }
+    }
+
+    fun messageNoLogin(){
+        println("Debes de iniciar session")
     }
 
     fun closeSession(){
@@ -90,14 +86,7 @@ class UserController(private val user:User, private val youtubeController: Youtu
         youtubeController.addUserToYoutube(createUser(user,password))
     }
 
-    fun logIn(){
-        for ((clave, valor) in checkUser()){
-            if(user.user==clave && user.password==valor)
-                println("Welcome to youtube")
-            else
-                println("username and password not found")
-        }
-    }
+
 
 
 

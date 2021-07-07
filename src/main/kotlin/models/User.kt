@@ -8,7 +8,5 @@ data class User(val user:String,val password:String) {
     val videosWhaLike= mutableListOf<Video>()
     val channalSuscribe= mutableListOf<Channel>()
     val historialOfWatchVideos= mutableListOf<Video>()
-
-
-
+    
 }

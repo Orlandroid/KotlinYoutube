@@ -1,11 +1,11 @@
 package models
 
-import constants.Quality
+import state.Quality
+import state.Speed
 
 data class Video(val name:String,val duration:Int,val channel:Channel){
     var visits=0
-    var speed=1
+    var speed:Speed=Speed.NORMAL
     var quality:Quality=Quality.Q140
-    var subtitleLanguaje="es"
     var enableSubtitle=false
 }

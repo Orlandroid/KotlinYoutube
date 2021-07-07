@@ -1,6 +1,5 @@
 package models
 
-import java.util.ArrayList
 
 data class Channel(val name:String,val user: User,val description:String){
 

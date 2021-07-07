@@ -1,4 +1,4 @@
-package constants
+package state
 
 enum class Quality {
     Q140,

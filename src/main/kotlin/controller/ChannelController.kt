@@ -1,30 +1,18 @@
 package controller
 
 import models.Channel
-import models.User
 import models.Video
 
+
 class ChannelController(private val channel: Channel){
-
-
-
-    fun addSubscriber(user:User)=channel.subscribers.add(user)
-
-    fun removeSubscriber(user: User)=channel.subscribers.remove(user)
-
-    fun getAllVideo()=channel.videos
-
-    private fun showCharacter(character:Char='*', size:Int=20){
-        for (x in 0..size)
-            print(character)
-    }
-
 
     private fun sendNotificationAUserSubscribeAvideo(){
         /**implement one tipe of listener what when
          * up one video send one notifications to all users*/
     }
 
+
+    /***Recibe un video por parametro y muestra sun propiedades*/
     private fun showVideo(video:Video){
         println("""         
             channel:${video.channel.name}
@@ -34,6 +22,8 @@ class ChannelController(private val channel: Channel){
     }
 
 
+    /**muestra todos los videos del canal
+     * y por cada canal llama a la funcion showVideo(video:Video)*/
     fun showAllVideos(){
         println("All videos from ${channel.name}")
         channel.videos.forEach {
@@ -41,6 +31,7 @@ class ChannelController(private val channel: Channel){
         }
     }
 
+    /**  Muestra el nombre del canal y el total de subcriptores**/
     fun showTotalOfSubscriber(){
         println("""
             The tottal of subcriber of the channel
@@ -48,16 +39,14 @@ class ChannelController(private val channel: Channel){
         """.trimIndent())
     }
 
-    fun sendNotification(){
-
-    }
-
+    /**recibe un video por parametro y lo sube al canal*/
     fun upVideo(video:Video,show:Boolean=false){
         channel.videos.add(video)
         if(show)
         println("The vide was upload correcly")
     }
 
+/**Recibe un canal por parametro y lo elima de los videos del usuario*/
     fun removeOneVideo(video: Video,show:Boolean=false){
         channel.videos.remove(video)
         if (show)

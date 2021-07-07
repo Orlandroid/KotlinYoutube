@@ -1,9 +1,8 @@
 package controller
 
-import constants.Quality
 import models.Video
 
-class VideoController(val video: Video) {
+class VideoController(private val video: Video) {
 
     /**
      * cambiarVelocidadVideo()
@@ -18,12 +17,6 @@ class VideoController(val video: Video) {
 
     /** 140 240 360 480 720 1080
      * */
-    fun changeSpeepVideo(){
-        video.quality=Quality.Q140
-    }
-
-
-
 
 
 }
