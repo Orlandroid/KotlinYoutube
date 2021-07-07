@@ -15,6 +15,7 @@ class MainMenu {
         var currentUser: User? = null
         var currentUserController:User?=null
         do {
+            println("new")
             println()
             println("1:Buscar un video")
             println("2:Videos que me gustan")
