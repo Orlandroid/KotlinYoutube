@@ -7,7 +7,7 @@ import models.Video
 class ChannelController(private val channel: Channel){
 
     private fun sendNotificationAUserSubscribeAvideo(){
-        /**implement one tipe of listener what when
+        /**implement one tipe of listener that when
          * up one video send one notifications to all users*/
     }
 
@@ -34,7 +34,7 @@ class ChannelController(private val channel: Channel){
     /**  Muestra el nombre del canal y el total de subcriptores**/
     fun showTotalOfSubscriber(){
         println("""
-            The tottal of subcriber of the channel
+            The total of subcriber of the channel
             ${channel.name} are ${channel.subscribers.size}
         """.trimIndent())
     }
@@ -43,14 +43,14 @@ class ChannelController(private val channel: Channel){
     fun upVideo(video:Video,show:Boolean=false){
         channel.videos.add(video)
         if(show)
-        println("The vide was upload correcly")
+        println("The video was upload correcly")
     }
 
 /**Recibe un canal por parametro y lo elima de los videos del usuario*/
     fun removeOneVideo(video: Video,show:Boolean=false){
         channel.videos.remove(video)
         if (show)
-        println("The vide was delete correcly")
+        println("The video was delete correcly")
     }
 
 
