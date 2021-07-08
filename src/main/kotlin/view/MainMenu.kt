@@ -13,9 +13,8 @@ class MainMenu {
 
     private fun menu() {
         var currentUser: User? = null
-        var currentUserController:User?=null
+        var currentUserController:UserController?=null
         do {
-            println("new")
             println()
             println("1:Buscar un video")
             println("2:Videos que me gustan")
@@ -36,33 +35,44 @@ class MainMenu {
                     youtubeController.searchAvideo()
                 }
                 2 ->{
-                    if(currentUser!=null)
-                        println("Videos que me gustan")
-                    else
+                    if (currentUser != null) {
+                        currentUserController= UserController(currentUser)
+                        currentUserController.videosWhatLike(currentUser)
+                    }
+                    else{
                         println("Debes de iniciar session")
+                    }
                 }
                 3 ->{
-                    if(currentUser != null)
-                        println("Este es tu historial")
+                    if(currentUser != null){
+                        currentUserController=UserController(currentUser)
+                        currentUserController.historialVideoswhatSee()
+                    }
                     else
                         print("Debes de iniciar session")
                 }
                 4 ->{
-                    if(currentUser != null)
-                        println("Este es tu canal")
+                    if(currentUser!=null){
+                        currentUserController= UserController(currentUser)
+                        currentUserController.myChannel()
+                    }
                     else
                         println("Debes de iniciar Session")
                 }
                 5 -> {
-                    println("Ingres el usuario")
-                    val usuario = readLine().toString()
-                    println("Ingresa la password")
-                    val password = readLine().toString()
-                    val user = User(usuario, password)
-                    if (Youtube.users.contains(user))
-                        println("El usuario se encuentra en la base de datos")
-                    else
-                        println("No hay ningun usuario registrado con ese nombre")
+                    if(currentUser!=null)
+                        println("Ya tienes una session $currentUser")
+                    else{
+                        println("Ingres el usuario")
+                        val usuario = readLine().toString()
+                        println("Ingresa la password")
+                        val password = readLine().toString()
+                        val user = User(usuario, password)
+                        if (Youtube.users.contains(user))
+                            println("El usuario se encuentra en la base de datos")
+                        else
+                            println("No hay ningun usuario registrado con ese nombre")
+                    }
                 }
                 6 -> {
                     if(currentUser != null){
@@ -74,24 +84,33 @@ class MainMenu {
                         println("Ingresa contraseña")
                         val password = readLine().toString()
                         currentUser = User(user, password)
+                        currentUser.isOnline=true
                         Youtube.users.add(currentUser)
                         println("El usuario se ha creado correctamente")
                     }
 
                 }
                 7 ->{
-                    println("Cerrando session")
-                    currentUser=null
+                    if (currentUser != null) {
+                        currentUser.isOnline=false
+                        println("Cerrar session")
+                    }
+                    else
+                        println("Debes de iniciar session")
                 }
                 8 ->{
-                    if (currentUser!=null)
-                        println("Vamos a crear tu canal")
+                    if (currentUser!=null){
+                        currentUserController= UserController(currentUser)
+                        currentUserController.makeYourChannel()
+                    }
                     else
                         println("Debes de iniciar Session")
                 }
                 9 -> {
-                    if(currentUser!=null)
-                        println(currentUser.user)
+                    if(currentUser!=null){
+                        println(currentUser)
+                        println(currentUser.isOnline)
+                    }
                     else
                         println("Debes de iniciar session para ver tu perfil")
                 }
