@@ -1,5 +1,6 @@
 package controller
 
+import models.Channel
 import models.User
 import models.Youtube
 
@@ -7,7 +8,7 @@ class UserController(private val user: User) {
 
 
     /***
-     *      ACCIONES QUE EL USUARIO PUEDO HACER
+     *      ACCIONES QUE EL USUARIO PUEDE HACER
      *    TuCanal()
      *   subirAvideo()
      *   verCanalesAlosQueEstoySubscripto()
@@ -36,12 +37,27 @@ class UserController(private val user: User) {
     }
 
     fun makeYourChannel(){
-        println("Creando tu canl")
+        println("Ingresa el nombre de tu canal")
+        val canal = readLine().toString()
+        println("Escribe una breve descripción de tu canal")
+        val descripcion = readLine().toString()
+        val channel = Channel(canal, user, descripcion)
+        Youtube.channels.add(channel)
+        println("Se ha creado tu canal")
+
     }
 
     fun myChannel() {
-        if (user.haveAchannel)
-            println("Opciones de tu canal")
+        if (user.haveAchannel) {
+            println("Opciones de tu canal: ")
+            println("1: subir video")
+            println("2: mostrar número de suscriptores")
+            // posteriormente agregar cambiar nombre, mostrar nombre y descripción, etc.
+            // println("2: mostrar todos los videos")
+        }
+
+
+
         else
             println("Debes de crear un canal primero")
     }
@@ -53,10 +69,26 @@ class UserController(private val user: User) {
             println("The ${user.user} don,t have one channel yet.")
     }
 
-    private fun cerrarSession() {
-        println("Are sure what do you want to leave")
-        println("1:YES")
+    fun cerrarSession(): Boolean {
+        println("Are sure that you want to leave")
+        println("1:Yes")
         println("2.No")
+        try{
+            val option: Int? = readLine()?.toInt()
+            if (option == 1){
+                user.isOnline = false
+                println("Finalizando tu session")
+            }
+            else{
+                println("Sigues en la session")
+            }}
+        catch (e: Exception){
+            println("Ingresa un número válido $e")
+        }
+        finally {
+            println("Proceso terminado")
+        }
+        return user.isOnline
     }
 
     private fun enterPassword() {
@@ -76,7 +108,7 @@ class UserController(private val user: User) {
     }
 
     fun closeSession() {
-        cerrarSession()
+        //cerrarSession()
         val option = readLine()?.toInt()
         if (option == 1)
             user.isOnline = false
@@ -88,6 +120,14 @@ class UserController(private val user: User) {
             println("El user is current online")
         else
             println("El user is current not online")
+    }
+
+    fun optionsChannel(){
+        myChannel()
+        val option = readLine()?.toInt()
+        if(option == 1){
+            println("Ingresa el nombre de tu video")
+        }
     }
 
     /**receive one user,passsword and return one Object of User
