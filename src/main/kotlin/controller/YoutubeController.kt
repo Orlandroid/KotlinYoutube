@@ -90,19 +90,25 @@ class YoutubeController(private val youtube: Youtube) {
         println("What you want to do")
     }
 
+    /**
+     * Funcion la cual usa una expreion regular para buscar los videos que considan con la
+     * busqueda de acurda a la expresion , la expresion regular que se usa es la siguiente
+     * /name/i donde name es el nombre del video a buscar y i es ignore lo cual significa que
+     * va a trata igual a kotlin KOTLIN KOtlin
+     * **/
 
     fun searchAvideo() {
         println("give the name of the video")
-        val name = readLine().toString()
-        val patternNameVideo = name.toRegex()
+        val videoName = readLine().toString()
+        /** pattern /name/i **/
+        val patternNameVideo = Regex(videoName,RegexOption.IGNORE_CASE)
         for (x in Youtube.channels.iterator()) {
-            /** ArrayList<Video> get all videos from each channel in youtube*/
             val videos = x.videos
-            var totales = 1
+            var totals = 1
             videos.forEach {
                 if (patternNameVideo.containsMatchIn(it.name)) {
-                    println(totales.toString())
-                    totales++
+                    println(totals.toString())
+                    totals++
                     showVideo(it)
                 }
             }
