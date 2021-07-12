@@ -1,12 +1,23 @@
 package controller
 
+//import jdk.internal.net.http.common.Log.channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import models.Channel
 import models.User
+import models.Video
 import models.Youtube
+import models.Youtube.Companion.channels
+import java.net.http.HttpResponse
+import kotlin.collections.MutableList as MutableList1
 
 class UserController(private val user: User) {
 
-
+    val canal = String()
+    val descripcion = String()
+    val durationUnit = 0
+    val name = String()
+    val Video1 = Video(name, durationUnit, Channel(canal, user, descripcion))
     /***
      *      ACCIONES QUE EL USUARIO PUEDE HACER
      *    TuCanal()
@@ -42,25 +53,68 @@ class UserController(private val user: User) {
         println("Escribe una breve descripción de tu canal")
         val descripcion = readLine().toString()
         val channel = Channel(canal, user, descripcion)
-        Youtube.channels.add(channel)
-        println("Se ha creado tu canal")
+        channels.add(channel)
 
+        runBlocking { println("Creando tu canal")
+            delay(2000)
+            println("Se ha creado tu canal") }
     }
-
     fun myChannel() {
         if (user.haveAchannel) {
-            println("Opciones de tu canal: ")
-            println("1: subir video")
-            println("2: mostrar número de suscriptores")
-            // posteriormente agregar cambiar nombre, mostrar nombre y descripción, etc.
-            // println("2: mostrar todos los videos")
+            try{
+            do {
+                println("Opciones de tu canal: ")
+                println("1: Subir video")
+                println("2: Mostrar número de suscriptores")
+                println("3: Eliminar video")
+                println("4: Mostrar nombre del canal y descripción")
+                println("0: Salir de este menú")
+
+                val option: Int? = readLine()?.toInt()
+                when (option) {
+                    1 -> {
+                        user.upload = true
+                        val currentChannel = ChannelController(Channel(canal, user,descripcion))
+                        currentChannel.upVideo(Video1)
+                    }
+                    2 -> {
+                        if (user.haveAchannel) {
+                            user.ChannelSubscribers.forEach {
+                                println(it)
+                                val currentChannel = ChannelController(Channel(canal, user,descripcion))
+                                currentChannel.showTotalOfSubscriber()
+                            }
+                        } else {
+                            println("You don`t have subscribers yet")}
+
+                    }
+                    3 -> {
+                        if(user.upload){
+                        val currentChannel = ChannelController(Channel(canal, user,descripcion))
+                        currentChannel.removeOneVideo(Video1)
+                    }else{
+                        println("You need to load a video")
+                    }}
+                    4 -> {
+                        if(user.haveAchannel){
+                            val currentChannel = channels
+                            println("Tu canal(es) ${channels}")
+                        }else{
+                            println("You don´t have any channel yet")
+                        }
+                    }
+                }
+            } while (option != 0)}
+            catch (e:Exception){
+                println("Por favor ingresa un número válido $e")
+            }
+            finally{
+                println("Proceso terminado")
+            }
         }
-
-
-
-        else
-            println("Debes de crear un canal primero")
-    }
+            else{
+                println("Debes de crear un canal primero")}
+                    }
 
     fun haveAChanel(user: User) {
         if (user.haveAchannel)
@@ -69,15 +123,17 @@ class UserController(private val user: User) {
             println("The ${user.user} don,t have one channel yet.")
     }
 
-    fun cerrarSession(): Boolean {
-        println("Are sure that you want to leave")
+     fun cerrarSession(): Boolean {
+        println("Are you sure that you want to leave")
         println("1:Yes")
         println("2.No")
         try{
             val option: Int? = readLine()?.toInt()
             if (option == 1){
                 user.isOnline = false
-                println("Finalizando tu session")
+                runBlocking {  println("Finalizando tu session...")
+                        delay(5000)//demora el cierre de la sesión por 5 segundos
+                        println("Session finalizada") }
             }
             else{
                 println("Sigues en la session")
@@ -107,8 +163,8 @@ class UserController(private val user: User) {
         println("Debes de iniciar session")
     }
 
+    //Se sustituye función por cerrarSession()
     fun closeSession() {
-        //cerrarSession()
         val option = readLine()?.toInt()
         if (option == 1)
             user.isOnline = false
@@ -140,6 +196,21 @@ class UserController(private val user: User) {
     fun signIn() {
 
     }
+//Código para saber a qué canales está suscrito el usuario, falta darle funcionalidad
+    val subscription = false
+    val ChannelCanSubscribe : Collection<Exception> //necesita inicializarse
+        get() {
+        return ChannelCanSubscribe
+        }
 
+    fun ChanneltoSubscribe(){
+    if(subscription== true){
+    println("Te has suscrito al canal")
+    }
+    else{
+        println("Aún no te has suscrito a ningún canal")
+    }
 
-}
+    }
+
+        }

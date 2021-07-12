@@ -1,6 +1,7 @@
 package controller
 
 import models.Channel
+import models.User
 import models.Video
 
 
@@ -39,19 +40,43 @@ class ChannelController(private val channel: Channel){
         """.trimIndent())
     }
 
+
     /**recibe un video por parametro y lo sube al canal*/
-    fun upVideo(video:Video,show:Boolean=false){
-        channel.videos.add(video)
-        if(show)
-        println("The video was upload correcly")
+     var upload : Boolean =false
+
+
+    fun upVideo(video:Video){
+                if(upload == true){//empieza con upload == false
+                    println("Write the name of your video")
+                    val name = readLine().toString()
+                    println("The video was uploaded correcly")
+                channel.videos.add(video)
+                }
+        else{
+            println("Something wen`t wrong, try again")
+        }
     }
 
-/**Recibe un canal por parametro y lo elima de los videos del usuario*/
-    fun removeOneVideo(video: Video,show:Boolean=false){
-        channel.videos.remove(video)
-        if (show)
-        println("The video was delete correcly")
+    /**Recibe un canal por parametro y lo elimina de los videos del usuario*/
+
+    fun removeOneVideo(video: Video){
+                if (upload == true) {
+            channel.videos.remove(video)
+            println("The video was deleted correcly")
+            //agregar una de seguridad para volver a preguntar a usuario si está seguro
+        }
+        else{
+            println("Video still in your channel")
+        }
     }
 
+    val subscribers: Int
+        get() {
+          return channel.subscribers.size
+        }
+        }
 
-}
+
+
+
+

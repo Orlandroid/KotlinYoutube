@@ -2,6 +2,7 @@ package view
 
 import controller.UserController
 import controller.YoutubeController
+import controller.ChannelController
 import models.Channel
 import models.User
 import models.Youtube
@@ -95,9 +96,9 @@ class MainMenu {
                             // currentUser.isOnline = false
                             currentUserController = UserController(currentUser)
                             currentUserController.cerrarSession()
-                            if(currentUser.isOnline == false)
+                            if(currentUser.isOnline == false){
                                 currentUser = null
-                            println("Session finalizada")
+                            }
                         } else
                             println("Debes de iniciar session")
                     }
@@ -117,8 +118,6 @@ class MainMenu {
                             println("Debes de iniciar session para ver tu perfil")
                     }
                 }
-
-
 
 
             }while (opcion != 0)}
