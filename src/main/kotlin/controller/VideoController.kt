@@ -87,10 +87,10 @@ class VideoController(private val video: Video) {
     /**Activar y desactivar subtitulos*/
 
     var captionsOn = false
-    fun activateSub (){
+    fun activateCaptions (){
         captionsOn = true
     }
-    fun subOff () {
+    fun captionsOff () {
         captionsOn = false
     }
     fun getcaptions(){
