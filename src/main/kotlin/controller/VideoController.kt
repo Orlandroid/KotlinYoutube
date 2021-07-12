@@ -86,16 +86,36 @@ class VideoController(private val video: Video) {
 
     /**Activar y desactivar subtitulos*/
 
-    var subOn = false
+    var captionsOn = false
     fun activateSub (){
-        subOn = true
+        captionsOn = true
     }
     fun subOff () {
-        subOn = false
+        captionsOn = false
     }
-    fun getSubs(){
-        val subsMode = if(subOn) "Subtitulos activados" else "Subtitulos desactivados"
-        println("Los subtitulos están $subsMode")
+    fun getcaptions(){
+        val captionsMode = if(captionsOn) "Subtitulos activados" else "Subtitulos desactivados"
+        println("Los subtitulos están $captionsMode")
     }
 
+    /**Cambiar idioma de subtitulos*/
+    fun captionsLanguage () {
+        println ("Selecciona el idioma de subtitulos")
+        println ("1: Spanish")
+        println ("2: English")
+        println ("3: Portuguese")
+
+        val captionsLanguage = readLine()?.toInt()
+
+        if(captionsLanguage == 1) {
+            println("Subtitulos en español activados")
+        }
+        if(captionsLanguage == 2) {
+            println("Subtitulos en inglés activados")
+        }
+        if(captionsLanguage == 3) {
+            println("Subtitulos en portugués activados")
+        }
+
+    }
 }
