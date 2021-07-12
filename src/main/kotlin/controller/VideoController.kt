@@ -86,5 +86,16 @@ class VideoController(private val video: Video) {
 
     /**Activar y desactivar subtitulos*/
 
+    var subOn = false
+    fun activateSub (){
+        subOn = true
+    }
+    fun subOff () {
+        subOn = false
+    }
+    fun getSubs(){
+        val subsMode = if(subOn) "Subtitulos activados" else "Subtitulos desactivados"
+        println("Los subtitulos están $subsMode")
+    }
 
 }
