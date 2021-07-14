@@ -88,6 +88,7 @@ class ChannelController(private val channel: Channel) {
             "En tiempo real",
             "Publicaciones"
         )
+        
         if (numeroDeCanales > 0) {
             println("$canalAlQueEstoySuscrito $numeroDeCanales $actividadEnLosCanales")
         } else {
