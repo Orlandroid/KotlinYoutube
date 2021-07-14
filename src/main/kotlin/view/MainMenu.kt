@@ -37,7 +37,10 @@ class MainMenu {
                     1 -> {
                         val youtube = Youtube()
                         val youtubeController = YoutubeController(youtube)
-                        youtubeController.searchAvideo()
+                        if (currentUser != null)
+                            youtubeController.searchAvideo(currentUser)
+                        else
+                            youtubeController.searchAvideo()
                     }
                     2 -> {
                         if (currentUser != null) {
@@ -112,8 +115,22 @@ class MainMenu {
                     }
                     9 -> {
                         if (currentUser != null) {
-                            println(currentUser)
-                            println(currentUser.isOnline)
+                            do {
+                                println("1: Profile")
+                                println("2: Subcripciones")
+                                println("0: Salir")
+                                val optionSubMenuProfile= readLine()?.toInt()
+                                when (optionSubMenuProfile){
+                                    1 ->{
+                                        println(currentUser)
+                                        println(currentUser.isOnline)
+                                    }
+                                    2 -> {
+                                        val userController=UserController(currentUser)
+                                        userController.showChannelSubcribe()
+                                    }
+                                }
+                            }while (optionSubMenuProfile != 0)
                         } else
                             println("Debes de iniciar session para ver tu perfil")
                     }

@@ -8,8 +8,6 @@ import models.User
 import models.Video
 import models.Youtube
 import models.Youtube.Companion.channels
-import java.net.http.HttpResponse
-import kotlin.collections.MutableList as MutableList1
 
 class UserController(private val user: User) {
 
@@ -39,11 +37,18 @@ class UserController(private val user: User) {
     }
 
 
-    /**muestra el historial de los videos que has visto*/
     fun historialVideoswhatSee() {
         println("Historial de videos que haz visto")
+        println()
         user.historialOfWatchVideos.forEach {
-            println(it)
+            val videoController=VideoController(it)
+            videoController.showVideo(it)
+        }
+    }
+
+    fun showChannelSubcribe(){
+        user.ChannelSubscribers.forEach{
+            println(it.name)
         }
     }
 
@@ -155,7 +160,8 @@ class UserController(private val user: User) {
     fun videosWhatLike(user: User) {
         println("Videos que te gustan")
         user.videosWhaLike.forEach {
-            println("Videos que te gustan $it")
+            val videoController=VideoController(it)
+            videoController.showVideo(it)
         }
     }
 

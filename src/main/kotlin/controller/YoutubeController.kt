@@ -24,7 +24,8 @@ class YoutubeController(private val youtube: Youtube) {
         val user = Youtube.users[0]
         val videos = user.historialOfWatchVideos
         videos.forEach {
-            showVideo(it)
+            val videoController=VideoController(it)
+            videoController.showVideo(it)
         }
     }
 
@@ -97,11 +98,14 @@ class YoutubeController(private val youtube: Youtube) {
      * va a trata igual a kotlin KOTLIN KOtlin
      * **/
 
-    fun searchAvideo() {
+
+    fun searchAvideo(user:User?=null) {
         println("give the name of the video")
         val videoName = readLine().toString()
         /** pattern /name/i **/
         val patternNameVideo = Regex(videoName,RegexOption.IGNORE_CASE)
+        /**variable que guarda los videos que encuentra la busqueda*/
+        val videosTemp= mutableListOf<Video>()
         for (x in Youtube.channels.iterator()) {
             val videos = x.videos
             var totals = 1
@@ -109,11 +113,27 @@ class YoutubeController(private val youtube: Youtube) {
                 if (patternNameVideo.containsMatchIn(it.name)) {
                     println(totals.toString())
                     totals++
-                    showVideo(it)
+                    val videoController =VideoController(it)
+                    videoController.showVideo(it)
+                    videosTemp.add(it)
                 }
             }
         }
+        println("Cual de los videos deseas ver")
+        val opcion= readLine()?.toInt()
+        if (opcion != null) {
+            /*** video controller el cual va a manejar todas las acciones de video*/
+            val videoController=VideoController(videosTemp[opcion-1])
+            if(user != null){
+                videoController.watchAVideo(videosTemp[opcion-1],user)
+            }else{
+                videoController.watchAVideo(videosTemp[opcion-1])
+            }
+
+        }
+
     }
+
 
     private fun showVideo(video: Video) {
         println(

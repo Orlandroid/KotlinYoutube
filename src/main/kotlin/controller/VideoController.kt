@@ -1,6 +1,13 @@
 package controller
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import models.User
 import models.Video
+import state.Quality
+import state.Speed
 
 class VideoController(private val video: Video) {
 
@@ -18,6 +25,91 @@ class VideoController(private val video: Video) {
     /** 140 240 360 480 720 1080
      * */
 
+
+    private fun donwload() {
+        var percentage = 0
+        GlobalScope.launch(Dispatchers.Default) {
+            while (percentage < 100) {
+                println("Descargando video: $percentage%")
+                delay(1000)
+                percentage += 10
+            }
+            println("Video descargado exitosamente")
+        }
+    }
+
+    /**This is the reproductor de video*/
+    /**simulation of the user is waching one video*/
+    fun watchAVideo(video: Video, user: User? = null) {
+        println("Waching ${video.name}")
+        Thread.sleep(video.duration.toLong())
+        /** si se tiene iniciada una session agregademos el video a lso videos vistos por el usuario**/
+        user?.historialOfWatchVideos?.add(video)
+        /**rise the number of visitas**/
+        video.visits += 1
+        do {
+            println("1: dar like")
+            println("2: Cambiar la velocidad de video")
+            println("3: cambiar calidad")
+            println("4: Descativar subtitulos")
+            println("5: Activar subtitulos")
+            println("6: Descargar video")
+            println("7: comentar video")
+            println("8: subcribirse al canal")
+            println("9: desubcribirse al canal")
+            println("0: volver al menu principal")
+            val opcion = readLine()?.toInt()
+            when (opcion) {
+                1 -> {
+                    if (user != null) {
+                        user.videosWhaLike.add(video)
+                        println("Añadido a videos que me gustan")
+                    } else
+                        println("Debes de iniciar sessio para ver los videos que te gustan")
+                }
+                2 -> video.speed = Speed.NORMAL
+                3 -> video.quality = Quality.Q140
+                4 -> video.enableSubtitle = false
+                5 -> video.enableSubtitle = true
+                6 -> donwload()
+                7 -> println("Comentando el video")
+                8 -> {
+                    if (user != null) {
+                        user.ChannelSubscribers.add(video.channel)
+                        println("Te has subscripto a este canal")
+                    } else
+                        println("Debes de iniciar session para subcribirte al canal")
+                }
+                9 -> {
+                    if (user != null) {
+                        println("¿Anular tu subcripcion a ${video.channel}?")
+                        println("1: YES")
+                        println("2: CANCELAR")
+                        when (readLine()?.toInt()) {
+                            1 -> {
+                                user.ChannelSubscribers.remove(video.channel)
+                                println("Te has desubcripto del canal")
+                            }
+                        }
+                    } else
+                        println("Debes de iniciar session para desuscribirte de una canal")
+                }
+
+            }
+        } while (opcion != 0)
+    }
+
+
+    fun showVideo(video: Video) {
+        println(
+            """
+            channel:${video.channel.name}
+            name:${video.name}
+            duration:${video.duration}
+        
+        """.trimIndent()
+        )
+    }
 
     /**Cambiar Velocidad de Video*/
     fun speedBack () {
