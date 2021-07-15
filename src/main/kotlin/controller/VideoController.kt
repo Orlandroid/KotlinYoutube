@@ -67,7 +67,9 @@ class VideoController(private val video: Video) {
                     } else
                         println("Debes de iniciar sessio para ver los videos que te gustan")
                 }
-                2 -> video.speed = Speed.NORMAL
+                2 -> {
+                    changeSpeed()
+                }
                 3 -> video.quality = Quality.Q140
                 4 -> video.enableSubtitle = false
                 5 -> video.enableSubtitle = true
@@ -110,6 +112,32 @@ class VideoController(private val video: Video) {
         """.trimIndent()
         )
     }
+
+
+    private fun changeSpeed(){
+        println("Selecciona la velocidad del video")
+        println("1: 0.25")
+        println("2: 0.5")
+        println("3: 0.75")
+        println("4: NORMAl")
+        println("5: 1.25")
+        println("6: 1.5")
+        println("7: 1.75")
+        println("8: 2")
+        when(readLine()?.toInt()){
+            1 -> video.speed=Speed.S0_25X
+            2 -> video.speed=Speed.S0_5X
+            3 -> video.speed=Speed.S0_75X
+            4 -> video.speed=Speed.NORMAL
+            5 -> video.speed=Speed.S1_25X
+            6 -> video.speed=Speed.S1_5X
+            7 -> video.speed=Speed.S1_75X
+            8 -> video.speed=Speed.S2x
+        }
+
+    }
+
+
 
     /**Cambiar Velocidad de Video*/
     fun speedBack () {
