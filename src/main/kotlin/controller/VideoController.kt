@@ -57,6 +57,7 @@ class VideoController(private val video: Video) {
             println("7: comentar video")
             println("8: subcribirse al canal")
             println("9: desubcribirse al canal")
+            println("10: imformacion video")
             println("0: volver al menu principal")
             val opcion = readLine()?.toInt()
             when (opcion) {
@@ -70,7 +71,9 @@ class VideoController(private val video: Video) {
                 2 -> {
                     changeSpeed()
                 }
-                3 -> video.quality = Quality.Q140
+                3 -> {
+                    changevideoQuality()
+                }
                 4 -> video.enableSubtitle = false
                 5 -> video.enableSubtitle = true
                 6 -> donwload()
@@ -96,11 +99,24 @@ class VideoController(private val video: Video) {
                     } else
                         println("Debes de iniciar session para desuscribirte de una canal")
                 }
-
+                10 -> {
+                    infoVideo()
+                }
             }
         } while (opcion != 0)
     }
 
+    private fun infoVideo(){
+        println("""
+            Nombre: ${video.name}
+            Duracion: ${video.duration} minutos
+            Canal: ${video.channel.name}
+            visitas: ${video.visits}
+            calidad: ${video.quality}
+            subtitulos ${video.enableSubtitle}
+            
+        """.trimIndent())
+    }
 
     fun showVideo(video: Video) {
         println(
@@ -135,6 +151,24 @@ class VideoController(private val video: Video) {
             8 -> video.speed=Speed.S2x
         }
 
+    }
+
+    private fun changevideoQuality(){
+        println("Selecciona la calida del video")
+        println("1: 140p")
+        println("2: 240p")
+        println("3: 360p")
+        println("4: 480p")
+        println("5: 720p")
+        println("6: 1080p")
+        when(readLine()?.toInt()){
+            1 -> video.quality=Quality.Q140
+            2 -> video.quality=Quality.Q240
+            3 -> video.quality=Quality.Q360
+            4 -> video.quality=Quality.Q480
+            5 -> video.quality=Quality.Q720
+            6 -> video.quality=Quality.Q1080
+        }
     }
 
 
