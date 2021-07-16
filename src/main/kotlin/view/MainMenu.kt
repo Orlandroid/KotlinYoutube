@@ -15,7 +15,7 @@ class MainMenu {
 
     private fun menu() {
         var currentUser: User? = null
-        var currentUserController:UserController?=null
+        var currentUserController: UserController? = null
         try {
             do {
                 println()
@@ -58,9 +58,13 @@ class MainMenu {
                             print("Debes de iniciar session")
                     }
                     4 -> {
-                        if (currentUser != null) {
-                            currentUserController = UserController(currentUser)
-                            currentUserController.myChannel()
+                        if (currentUser != null ) {
+                            if (currentUser.haveAchannel){
+                                currentUserController = UserController(currentUser)
+                                currentUserController.myChannel()
+                            }
+                            else
+                                println("Aun no tienes una canal")
                         } else
                             println("Debes de iniciar Session")
                     }
@@ -99,7 +103,7 @@ class MainMenu {
                             // currentUser.isOnline = false
                             currentUserController = UserController(currentUser)
                             currentUserController.cerrarSession()
-                            if(currentUser.isOnline == false){
+                            if (currentUser.isOnline == false) {
                                 currentUser = null
                             }
                         } else
@@ -119,30 +123,34 @@ class MainMenu {
                                 println("1: Profile")
                                 println("2: Subcripciones")
                                 println("0: Salir")
-                                val optionSubMenuProfile= readLine()?.toInt()
-                                when (optionSubMenuProfile){
-                                    1 ->{
-                                        println(currentUser)
-                                        println(currentUser.isOnline)
+                                val optionSubMenuProfile = readLine()?.toInt()
+                                when (optionSubMenuProfile) {
+                                    1 -> {
+                                        println("""
+                                            
+                                            Usuario: ${currentUser.user}
+                                            Online:  ${currentUser.isOnline}
+                                            Tiene canal: ${currentUser.haveAchannel}
+                                        """.trimIndent())
                                     }
                                     2 -> {
-                                        val userController=UserController(currentUser)
+                                        val userController = UserController(currentUser)
                                         userController.showChannelSubcribe()
                                     }
                                 }
-                            }while (optionSubMenuProfile != 0)
+                            } while (optionSubMenuProfile != 0)
                         } else
                             println("Debes de iniciar session para ver tu perfil")
                     }
                 }
 
 
-            }while (opcion != 0)}
-        catch(e:Exception){
+            } while (opcion != 0)
+        } catch (e: Exception) {
             println("Por favor ingresa un número válido $e")
-        }
-        finally{
+        } finally {
             println("Proceso terminado")
         }
 
-    }}
+    }
+}

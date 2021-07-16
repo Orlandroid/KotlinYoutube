@@ -34,7 +34,7 @@ class Database {
         val video4= Video("Programacion funcional",18,android)
         val video5= Video("Programacion asincrona",8,android)
 
-        val video6 = Video("¿Qu es linux?",19,linux)
+        val video6 = Video("¿Que es linux?",19,linux)
 
         android.videos.add(video)
         android.videos.add(video2)

@@ -38,8 +38,10 @@ class UserController(private val user: User) {
 
 
     fun historialVideoswhatSee() {
-        println("Historial de videos que haz visto")
-        println()
+        if (user.historialOfWatchVideos.isEmpty()){
+            println("Aun no haz visto ningun video")
+            return
+        }
         user.historialOfWatchVideos.forEach {
             val videoController=VideoController(it)
             videoController.showVideo(it)
@@ -47,6 +49,10 @@ class UserController(private val user: User) {
     }
 
     fun showChannelSubcribe(){
+        if(user.ChannelSubscribers.isEmpty()){
+            println("Aun no te has subcrito a ningun canal")
+            return
+        }
         user.ChannelSubscribers.forEach{
             println(it.name)
         }
@@ -158,7 +164,10 @@ class UserController(private val user: User) {
 
 
     fun videosWhatLike(user: User) {
-        println("Videos que te gustan")
+        if(user.videosWhaLike.isEmpty()){
+            println("Aun no haz dado like a ningun video")
+            return
+        }
         user.videosWhaLike.forEach {
             val videoController=VideoController(it)
             videoController.showVideo(it)
