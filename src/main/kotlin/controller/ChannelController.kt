@@ -1,7 +1,9 @@
 package controller
 
+
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import models.Channel
-import models.User
 import models.Video
 
 
@@ -12,29 +14,78 @@ class ChannelController(private val channel: Channel) {
          * up one video send one notifications to all users*/
     }
 
-    private fun menuChanel(){
-        val registeredUser: User? = null
-        println(registeredUser)
-        val paginaPrincipal = "PáginaPrincipal"
-        val videos = "Videos"
-        val listaDeReproduccion = "Lista de reproducción"
-        val canales = "Canales"
-        val debates = "Debates"
-        val acercaDe = "Acerca de"
-        val personalizarCanal = "Personalizar Canal"
-        val administrarVideos = "Administrar Videos"
-        val arrayMenu : ArrayList<String> = arrayListOf<String>()
-        arrayMenu.add(paginaPrincipal)
-        arrayMenu.add(videos)
-        arrayMenu.add(listaDeReproduccion)
-        arrayMenu.add(canales)
-        arrayMenu.add(debates)
-        arrayMenu.add(acercaDe)
-        arrayMenu.add(personalizarCanal)
-        arrayMenu.add(administrarVideos)
-        print(arrayMenu)
-        val opcion = readLine() ?.toInt()
-        println("Opcion $opcion")
+
+    fun myChannel() {
+        if (channel.user.haveAchannel) {
+            try {
+                do {
+                    println("Opciones de tu canal: ")
+                    println("1: Subir video")
+                    println("2: Mostrar número de suscriptores")
+                    println("3: Eliminar video")
+                    println("4: Info canal")
+                    println("5: Mostrar todos los videos")
+                    println("0: Salir de este menú")
+
+                    val option: Int? = readLine()?.toInt()
+                    when (option) {
+                        1 -> {
+                            val video = createVideo()
+                            if (video != null) {
+                                upVideo(video)
+                            } else {
+                                println("No se pudo subir el video")
+                            }
+                        }
+                        2 -> {
+                            println("Total de subcriptores")
+                            println(channel.subscribers.size)
+                        }
+                        3 -> {
+                            //removeOneVideo()
+                        }
+                        4 -> {
+                            println(
+                                """
+                                
+                                Nombre: ${channel.name}
+                                Descripcion : ${channel.description}
+                                Subscriptores: ${channel.subscribers.size}
+                                Videos:        ${channel.videos.size}
+                                
+                            """.trimIndent()
+                            )
+                        }
+                        5 -> {
+                            showAllVideos()
+                        }
+                    }
+                } while (option != 0)
+            } catch (e: Exception) {
+                println("Por favor ingresa un número válido $e")
+            } finally {
+                println("Proceso terminado")
+            }
+        } else {
+            println("Debes de crear un canal primero")
+        }
+    }
+
+    private fun upVideo(video: Video) {
+        runBlocking {
+            println("Subiendo tu video..")
+            delay(4000)
+        }
+        channel.videos.add(video)
+        println("Tu video a subido correctamente")
+    }
+
+    private fun createVideo(): Video? {
+        println("Ingresa el nombre el video")
+        val name = readLine().toString()
+        println("Ingresa la duracion del video")
+        val duration = readLine()?.toInt()
+        return duration?.let { Video(name, it, channel) }
     }
 
 
@@ -60,67 +111,41 @@ class ChannelController(private val channel: Channel) {
     }
 
     /**  Muestra el nombre del canal y el total de subcriptores**/
-    fun showTotalOfSubscriber(){
-        println("""
+    fun showTotalOfSubscriber() {
+        println(
+            """
         The total of subcriber of the channel
         ${channel.name} are ${channel.subscribers.size}
-    """.trimIndent())
+    """.trimIndent()
+        )
         val nombreDelCanal = "Nombre del Canal "
-        val suscriptoresActuales =0
-        val suscriptoresNuevos =0
+        val suscriptoresActuales = 0
+        val suscriptoresNuevos = 0
         val totalDeSuscriptores = suscriptoresActuales + suscriptoresNuevos
-        if (totalDeSuscriptores > 0){
+        if (totalDeSuscriptores > 0) {
             println("$nombreDelCanal$totalDeSuscriptores suscriptores")
         } else {
             print("$nombreDelCanal$totalDeSuscriptores sin suscriptores")
         }
     }
 
-    /**Muestra los canales a los que está suscrito*/
-    fun canalesAlosQueEstoySuscrito() {
-        val canalAlQueEstoySuscrito = "Suscripciones"
-        val numeroDeCanales = 10
-        val actividadEnLosCanales = arrayListOf<String>(
-            "Todo",
-            "Hoy",
-            "Continua mirando",
-            "Sin mirar",
-            "En tiempo real",
-            "Publicaciones"
-        )
-        
-        if (numeroDeCanales > 0) {
-            println("$canalAlQueEstoySuscrito $numeroDeCanales $actividadEnLosCanales")
-        } else {
-            print("$numeroDeCanales sin suscripciones")
-        }
-    }
-
-
-    /**recibe un video por parametro y lo sube al canal*/
-    var upload: Boolean = false
-
-
-    fun upVideo(video: Video) {
-        if (upload == true) {//empieza con upload == false
-            println("Write the name of your video")
-            val name = readLine().toString()
-            println("The video was uploaded correcly")
-            channel.videos.add(video)
-        } else {
-            println("Something wen`t wrong, try again")
-        }
-    }
 
     /**Recibe un canal por parametro y lo elimina de los videos del usuario*/
 
+    /***Candado de seguridad para ver si el usuario esta completamente seguro de eliminar el video**/
     fun removeOneVideo(video: Video) {
-        if (upload == true) {
-            channel.videos.remove(video)
-            println("The video was deleted correcly")
-            //agregar una de seguridad para volver a preguntar a usuario si está seguro
-        } else {
-            println("Video still in your channel")
+        println("Estas seguro que deseas eliminar el video")
+        println("1: Yes")
+        println("2: No")
+        when (readLine()?.toInt()) {
+            1 -> {
+                runBlocking {
+                    println("Eliminado el video")
+                    delay(3000)
+                }
+                channel.videos.remove(video)
+                println("The video was deleted correcly")
+            }
         }
     }
 

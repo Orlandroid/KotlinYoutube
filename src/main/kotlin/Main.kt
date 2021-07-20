@@ -7,7 +7,7 @@ import java.util.*
 
 fun main() {
 
-    val database=Database()
-    val menu=MainMenu()
+    val database = Database()
+    val menu = MainMenu()
 
 }
