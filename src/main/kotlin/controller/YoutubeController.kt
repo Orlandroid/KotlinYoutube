@@ -19,12 +19,11 @@ class YoutubeController(private val youtube: Youtube) {
     }
 
 
-
     private fun historialOfwatchVideos() {
         val user = Youtube.users[0]
         val videos = user.historialOfWatchVideos
         videos.forEach {
-            val videoController=VideoController(it)
+            val videoController = VideoController(it)
             videoController.showVideo(it)
         }
     }
@@ -92,68 +91,57 @@ class YoutubeController(private val youtube: Youtube) {
     }
 
     /**
-     * Funcion la cual usa una expreion regular para buscar los videos que considan con la
-     * busqueda de acurda a la expresion , la expresion regular que se usa es la siguiente
+     * Funcion la cual usa una expresion regular para buscar los videos que considan con la
+     * busqueda de acuerda a la expresion , la expresion regular que se usa es la siguiente
      * /name/i donde name es el nombre del video a buscar y i es ignore lo cual significa que
      * va a trata igual a kotlin KOTLIN KOtlin
      * **/
 
 
-    fun searchAvideo(user:User?=null) {
+    fun searchAvideo(user: User? = null) {
         println("give the name of the video")
         val videoName = readLine().toString()
+
         /** pattern /name/i **/
-        val patternNameVideo = Regex(videoName,RegexOption.IGNORE_CASE)
+        val patternNameVideo = Regex(videoName, RegexOption.IGNORE_CASE)
+
+        /**Total de videos encontrados en la base de datos con el patron
+         * que le indicamos arriba ***/
+        var totals = 0
+
         /**variable que guarda los videos que encuentra la busqueda*/
-        val videosTemp= mutableListOf<Video>()
-        for (x in Youtube.channels.iterator()) {
-            val videos = x.videos
-            var totals = 1
+        val videosTemp = mutableListOf<Video>()
+        for (v in Youtube.channels.iterator()) {
+            val videos = v.videos
             videos.forEach {
                 if (patternNameVideo.containsMatchIn(it.name)) {
-                    println(totals.toString())
+                    println((totals + 1).toString())
                     totals++
-                    val videoController =VideoController(it)
+                    val videoController = VideoController(it)
                     videoController.showVideo(it)
                     videosTemp.add(it)
                 }
             }
         }
+        if (totals == 0) {
+            println("No se encontro ningun video")
+            return
+        }
         println("Cual de los videos deseas ver")
-        val opcion= readLine()?.toInt()
+        val opcion = readLine()?.toInt()
         if (opcion != null) {
             /*** video controller el cual va a manejar todas las acciones de video*/
-            val videoController=VideoController(videosTemp[opcion-1])
-            if(user != null){
-                videoController.watchAVideo(videosTemp[opcion-1],user)
-            }else{
-                videoController.watchAVideo(videosTemp[opcion-1])
+            val videoController = VideoController(videosTemp[opcion - 1])
+            if (user != null) {
+                videoController.watchAVideo(videosTemp[opcion - 1], user)
+            } else {
+                videoController.watchAVideo(videosTemp[opcion - 1])
             }
 
         }
 
     }
 
-
-    private fun showVideo(video: Video) {
-        println(
-            """
-            channel:${video.channel.name}
-            name:${video.name}
-            duration:${video.duration}
-        
-        """.trimIndent()
-        )
-    }
-
-
-    /**simulation of the user is waching one video*/
-    fun watchAVide(video: Video) {
-        println("Waching ${video.name}")
-        Thread.sleep(video.duration.toLong())
-        /**rise the number of visitas**/
-        video.visits += 1
-    }
 
     fun showAllVideos(channels: ArrayList<Channel>) {
         for (channel in channels.iterator())
@@ -169,7 +157,6 @@ class YoutubeController(private val youtube: Youtube) {
     private fun printChannel(channel: Channel) {
         println(channel.name)
     }
-
 
 
     fun addUserToYoutube(user: User) {
