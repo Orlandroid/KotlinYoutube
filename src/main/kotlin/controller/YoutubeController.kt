@@ -105,20 +105,27 @@ class YoutubeController(private val youtube: Youtube) {
         /** pattern /name/i **/
         val patternNameVideo = Regex(videoName, RegexOption.IGNORE_CASE)
 
+        /**Total de videos encontrados en la base de datos con el patron
+         * que le indicamos arriba ***/
+        var totals = 0
+
         /**variable que guarda los videos que encuentra la busqueda*/
         val videosTemp = mutableListOf<Video>()
-        for (x in Youtube.channels.iterator()) {
-            val videos = x.videos
-            var totals = 1
+        for (v in Youtube.channels.iterator()) {
+            val videos = v.videos
             videos.forEach {
                 if (patternNameVideo.containsMatchIn(it.name)) {
-                    println(totals.toString())
+                    println((totals + 1).toString())
                     totals++
                     val videoController = VideoController(it)
                     videoController.showVideo(it)
                     videosTemp.add(it)
                 }
             }
+        }
+        if (totals == 0) {
+            println("No se encontro ningun video")
+            return
         }
         println("Cual de los videos deseas ver")
         val opcion = readLine()?.toInt()
@@ -134,7 +141,6 @@ class YoutubeController(private val youtube: Youtube) {
         }
 
     }
-
 
 
     fun showAllVideos(channels: ArrayList<Channel>) {

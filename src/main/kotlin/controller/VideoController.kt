@@ -1,9 +1,6 @@
 package controller
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import models.User
 import models.Video
 import state.Quality
@@ -27,11 +24,13 @@ class VideoController(private val video: Video) {
 
     private fun donwload() {
         var percentage = 0
-        GlobalScope.launch(Dispatchers.Default) {
+        val mb = (5..10).random()
+        println("tu velocidad  de internet es $mb MB/s")
+        runBlocking {
             while (percentage < 100) {
                 println("Descargando video: $percentage%")
                 delay(1000)
-                percentage += 10
+                percentage += mb
             }
             println("Video descargado exitosamente")
         }
@@ -109,8 +108,9 @@ class VideoController(private val video: Video) {
         } while (opcion != 0)
     }
 
-    private fun infoVideo(){
-        println("""
+    private fun infoVideo() {
+        println(
+            """
             
             Nombre: ${video.name}
             Duracion: ${video.duration} minutos
@@ -119,7 +119,8 @@ class VideoController(private val video: Video) {
             Calidad: ${video.quality}
             Subtitulos: ${getCaptions()}
             
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
     fun showVideo(video: Video) {
@@ -134,7 +135,7 @@ class VideoController(private val video: Video) {
     }
 
     /**Cambia la velocidad del video**/
-    private fun changeSpeed(){
+    private fun changeSpeed() {
         println("Selecciona la velocidad del video")
         println("1: 0.25")
         println("2: 0.5")
@@ -144,21 +145,21 @@ class VideoController(private val video: Video) {
         println("6: 1.5")
         println("7: 1.75")
         println("8: 2")
-        when(readLine()?.toInt()){
-            1 -> video.speed=Speed.S0_25X
-            2 -> video.speed=Speed.S0_5X
-            3 -> video.speed=Speed.S0_75X
-            4 -> video.speed=Speed.NORMAL
-            5 -> video.speed=Speed.S1_25X
-            6 -> video.speed=Speed.S1_5X
-            7 -> video.speed=Speed.S1_75X
-            8 -> video.speed=Speed.S2x
+        when (readLine()?.toInt()) {
+            1 -> video.speed = Speed.S0_25X
+            2 -> video.speed = Speed.S0_5X
+            3 -> video.speed = Speed.S0_75X
+            4 -> video.speed = Speed.NORMAL
+            5 -> video.speed = Speed.S1_25X
+            6 -> video.speed = Speed.S1_5X
+            7 -> video.speed = Speed.S1_75X
+            8 -> video.speed = Speed.S2x
         }
 
     }
 
     /**Cambia la calidad del video**/
-    private fun changevideoQuality(){
+    private fun changevideoQuality() {
         println("Selecciona la calida del video")
         println("1: 140p")
         println("2: 240p")
@@ -166,13 +167,13 @@ class VideoController(private val video: Video) {
         println("4: 480p")
         println("5: 720p")
         println("6: 1080p")
-        when(readLine()?.toInt()){
-            1 -> video.quality=Quality.Q140
-            2 -> video.quality=Quality.Q240
-            3 -> video.quality=Quality.Q360
-            4 -> video.quality=Quality.Q480
-            5 -> video.quality=Quality.Q720
-            6 -> video.quality=Quality.Q1080
+        when (readLine()?.toInt()) {
+            1 -> video.quality = Quality.Q140
+            2 -> video.quality = Quality.Q240
+            3 -> video.quality = Quality.Q360
+            4 -> video.quality = Quality.Q480
+            5 -> video.quality = Quality.Q720
+            6 -> video.quality = Quality.Q1080
         }
     }
 

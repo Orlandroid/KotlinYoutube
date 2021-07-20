@@ -1,8 +1,10 @@
 package view
 
+import controller.ChannelController
 import controller.UserController
 import controller.YoutubeController
-import controller.ChannelController
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import models.Channel
 import models.User
 import models.Youtube
@@ -16,6 +18,8 @@ class MainMenu {
     private fun menu() {
         var currentUser: User? = null
         var currentUserController: UserController? = null
+        var currentChannelController: ChannelController? = null
+        var currentChannel: Channel? = null
         try {
             do {
                 println()
@@ -58,12 +62,11 @@ class MainMenu {
                             print("Debes de iniciar session")
                     }
                     4 -> {
-                        if (currentUser != null ) {
-                            if (currentUser.haveAchannel){
-                                currentUserController = UserController(currentUser)
-                                currentUserController.myChannel()
-                            }
-                            else
+                        if (currentUser != null) {
+                            if (currentChannel != null) {
+                                currentChannelController = ChannelController(currentChannel)
+                                currentChannelController.myChannel()
+                            } else
                                 println("Aun no tienes una canal")
                         } else
                             println("Debes de iniciar Session")
@@ -100,20 +103,28 @@ class MainMenu {
                     }
                     7 -> {
                         if (currentUser != null) {
-                            // currentUser.isOnline = false
                             currentUserController = UserController(currentUser)
                             currentUserController.cerrarSession()
-                            if (currentUser.isOnline == false) {
-                                currentUser = null
-                            }
                         } else
                             println("Debes de iniciar session")
                     }
                     8 -> {
                         if (currentUser != null) {
-                            currentUserController = UserController(currentUser)
-                            currentUserController.makeYourChannel()
-
+                            if (currentUser.haveAchannel) {
+                                println("Tu ya tienes una canal")
+                            } else {
+                                println("Ingresa el nombre de tu canal")
+                                val nombre = readLine().toString()
+                                println("Escribe una breve descripción de tu canal")
+                                val descripcion = readLine().toString()
+                                currentChannel = Channel(nombre, currentUser, descripcion)
+                                Youtube.channels.add(currentChannel)
+                                runBlocking {
+                                    println("Creando tu canal")
+                                    delay(2000)
+                                    println("Se ha creado tu canal")
+                                }
+                            }
                         } else
                             println("Debes de iniciar Session")
                     }
@@ -126,12 +137,14 @@ class MainMenu {
                                 val optionSubMenuProfile = readLine()?.toInt()
                                 when (optionSubMenuProfile) {
                                     1 -> {
-                                        println("""
+                                        println(
+                                            """
                                             
                                             Usuario: ${currentUser.user}
                                             Online:  ${currentUser.isOnline}
                                             Tiene canal: ${currentUser.haveAchannel}
-                                        """.trimIndent())
+                                        """.trimIndent()
+                                        )
                                     }
                                     2 -> {
                                         val userController = UserController(currentUser)

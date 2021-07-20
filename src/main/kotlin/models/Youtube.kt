@@ -2,9 +2,9 @@ package models
 
 class Youtube {
 
-    companion object{
+    companion object {
         val channels = mutableListOf<Channel>()
-        val users= mutableListOf<User>()
+        val users = mutableListOf<User>()
     }
 
 }
